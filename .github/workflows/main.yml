@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Hello world action step
-        uses: pietrangelo/hello-world-javascript-action@v1.2.3
+        uses: pietrangelo/hello-world-javascript-action@v1.2.4-alpha
         id: hello
         with:
           who-to-greet: "Nenno"
