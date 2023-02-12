@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - update_release_draft:
+      - name: version
         id: version
         run: |
           tag=${GITHUB_REF/refs\/tags\//}
