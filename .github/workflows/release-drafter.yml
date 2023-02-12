@@ -1,13 +1,18 @@
 name: Release
 on:
   push:
-
     tags:
       - v*.*.*
 
+permissions:
+  contents: read
 
 jobs:
-  build:
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: write
+      tags: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
