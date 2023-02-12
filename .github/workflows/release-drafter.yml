@@ -5,21 +5,28 @@ on:
       - v*.*.*
 
 jobs:
-  steps:
-    - update_release_draft:
-      id: version
-      run: |
-        tag=${GITHUB_REF/refs\/tags\//}
-        version=${tag#v}
-        major=${version%%.*}
-        echo "tag=${tag}" >> $GITHUB_OUTPUT
-        echo "version=${version}" >> $GITHUB_OUTPUT
-        echo "major=${major}" >> $GITHUB_OUTPUT
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      uses: release-drafter/release-drafter@v5.21.1
-        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-      with:
-        config-name: my-release-conf.yml
-        disable-autolabeler: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - update_release_draft:
+        id: version
+        run: |
+          tag=${GITHUB_REF/refs\/tags\//}
+          version=${tag#v}
+          major=${version%%.*}
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "major=${major}" >> $GITHUB_OUTPUT
+
+        uses: release-drafter/release-drafter@v5.21.1
+          # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
+        with:
+          config-name: my-release-conf.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
