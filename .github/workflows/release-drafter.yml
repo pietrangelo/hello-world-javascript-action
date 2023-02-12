@@ -1,25 +1,25 @@
 name: Release
-
 on:
   push:
     tags:
       - v*.*.*
 
 jobs:
-  - update_release_draft:
-    id: version
-    run: |
-      tag=${GITHUB_REF/refs\/tags\//}
-      version=${tag#v}
-      major=${version%%.*}
-      echo "tag=${tag}" >> $GITHUB_OUTPUT
-      echo "version=${version}" >> $GITHUB_OUTPUT
-      echo "major=${major}" >> $GITHUB_OUTPUT
+  steps:
+    - update_release_draft:
+      id: version
+      run: |
+        tag=${GITHUB_REF/refs\/tags\//}
+        version=${tag#v}
+        major=${version%%.*}
+        echo "tag=${tag}" >> $GITHUB_OUTPUT
+        echo "version=${version}" >> $GITHUB_OUTPUT
+        echo "major=${major}" >> $GITHUB_OUTPUT
 
-  - uses: release-drafter/release-drafter@v5.21.1
+      uses: release-drafter/release-drafter@v5.21.1
         # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-    with:
-      config-name: my-release-conf.yml
-      disable-autolabeler: true
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        config-name: my-release-conf.yml
+        disable-autolabeler: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
