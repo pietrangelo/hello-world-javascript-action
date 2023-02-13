@@ -4,9 +4,14 @@ on:
     tags:
       - v*.*.*
 
+permissions:
+  contents: read
 
 jobs:
-  build:
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +30,6 @@ jobs:
           echo "major=${major}" >> $GITHUB_OUTPUT
 
       - uses: release-drafter/release-drafter@v5.21.1
-
 
           # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
 
